@@ -1,56 +1,83 @@
-import { Box, Drawer, List, ListItem, ListItemButton, ListItemText } from "@mui/material";
-import { useUIState } from "./UIStateProvider";
+import { 
+    Box, 
+    Drawer, 
+    List, 
+    ListItem, 
+    ListItemButton, 
+    ListItemIcon, 
+    ListItemText
+ } from "@mui/material";
+
+import { useDispatch, useSelector } from "react-redux";
+import { getOpenDrawer, setOpenDrawer } from "../app/appDrawerSlice";
+
+import {
+    Home as HomeIcon,
+    PersonAdd as RegisterIcon,
+    Login as LoginIcon,
+    Logout as LogoutIcon,
+} from "@mui/icons-material";
+
 import { useNavigate } from "react-router-dom";
-import { LightMode } from "@mui/icons-material";
 
 export default function AppDrawer() {
-    const {open, setOpen} = useUIState();
+    const openDrawer = useSelector(getOpenDrawer);
+    const dispatch = useDispatch();
+
     const navigate = useNavigate();
 
-    return <Drawer 
-        anchor="left"
-        open={open}
-        onClose={() => setOpen(false)}>
-
-        <Box sx={{ width: 300 }}>
-            <List>
-                <ListItem disablePadding>
-                    <ListItemButton disableRipple
-                        onClick={() => {
+    return <Drawer
+            open={openDrawer}
+            anchor="left"
+            onClose={() => dispatch(setOpenDrawer())}
+        >
+            <Box sx={{ width: 300 }}>
+                <List>
+                    <ListItem disablePadding>
+                        <ListItemButton disableRipple onClick={() => {
                             navigate("/");
-                            setOpen(false);
-                        }}
-                    >
-                        <ListItemText primary="Home" />
-                    </ListItemButton>
-                </ListItem>
-                <ListItem disablePadding>
-                    <ListItemButton disableRipple
-                        onClick={() => {
-                            navigate("/login");
-                            setOpen(false);
-                        }}
-                    >
-                        <ListItemText primary="Login" />
-                    </ListItemButton>
-                </ListItem>
-                <ListItem disablePadding>
-                    <ListItemButton disableRipple
-                        onClick={() => {
-                            navigate("/register");
-                            setOpen(false);
-                        }}
-                    >
-                        <ListItemText primary="Register" />
-                    </ListItemButton>
-                </ListItem>
-                <ListItem disablePadding>
-                    <ListItemButton disableRipple>
-                        <ListItemText primary="Logout" />
-                    </ListItemButton>
-                </ListItem>
-            </List>
-        </Box>
-    </Drawer>
+                            dispatch(setOpenDrawer());
+                        }}>
+                            <ListItemIcon>
+                                <HomeIcon/>
+                            </ListItemIcon>
+                            <ListItemText primary="Home" />
+                        </ListItemButton>
+                    </ListItem>
 
+                    <ListItem disablePadding>
+                        <ListItemButton disableRipple onClick={() => {
+                            navigate("/register");
+                            dispatch(setOpenDrawer());
+                        }}>
+                            <ListItemIcon>
+                                <RegisterIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Register" />
+                        </ListItemButton>
+                    </ListItem>
+
+                    <ListItem disablePadding>
+                        <ListItemButton disableRipple onClick={() => {
+                            navigate("/login");
+                            dispatch(setOpenDrawer());
+                        }}>
+                            <ListItemIcon>
+                                <LoginIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Login" />
+                        </ListItemButton>
+                    </ListItem>
+
+                    <ListItem disablePadding>
+                        <ListItemButton disableRipple>
+                            <ListItemIcon>
+                                <LogoutIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Logout" />
+                        </ListItemButton>
+                    </ListItem>
+                </List>
+            </Box>
+    </Drawer>
 }
