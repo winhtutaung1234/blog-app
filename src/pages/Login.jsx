@@ -3,10 +3,12 @@ import { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setFeedBack, setOpenMessage } from "../app/messageSlice";
+import { useAuthUser } from "../components/AuthUser";
 
 export default function Login() {
     const emailRef = useRef();
     const passRef = useRef();
+    const { authUser, setAuthUser } = useAuthUser();
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -46,6 +48,10 @@ export default function Login() {
         });
 
         const user = await user_res.json();
+
+        if(user) {
+            setAuthUser(user);
+        }
 
         dispatch(setFeedBack("Login success"));
         dispatch(setOpenMessage());

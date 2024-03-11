@@ -10,15 +10,18 @@ import { CssBaseline } from '@mui/material'
 import { Provider } from 'react-redux'
 import { store } from './app/store.js'
 import AppThemeProvider from './components/AppThemeProvider.jsx'
+import AuthUser from './components/AuthUser.jsx'
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Provider store={store}>
-      <AppThemeProvider>
-        <CssBaseline />
-        <App />
-      </AppThemeProvider>
+      <AuthUser>
+        <AppThemeProvider>
+          <CssBaseline />
+          <App />
+        </AppThemeProvider>
+      </AuthUser>
     </Provider>
   </React.StrictMode>,
 )

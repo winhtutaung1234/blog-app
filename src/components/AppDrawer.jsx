@@ -19,12 +19,14 @@ import {
 } from "@mui/icons-material";
 
 import { useNavigate } from "react-router-dom";
+import { useAuthUser } from "./AuthUser";
 
 export default function AppDrawer() {
     const openDrawer = useSelector(getOpenDrawer);
     const dispatch = useDispatch();
 
     const navigate = useNavigate();
+    const { setAuthUser } = useAuthUser();
 
     return <Drawer
             open={openDrawer}
@@ -72,6 +74,7 @@ export default function AppDrawer() {
                     <ListItem disablePadding>
                         <ListItemButton disableRipple onClick={() => {
                             localStorage.removeItem("token");
+                            setAuthUser({});
                             dispatch(setOpenDrawer());
                         }}>
                             <ListItemIcon>
