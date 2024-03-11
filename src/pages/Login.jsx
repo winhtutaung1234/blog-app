@@ -1,13 +1,19 @@
 import { Alert, Box, Button, TextField, Typography } from "@mui/material";
 import { useRef, useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { setFeedBack, setOpenMessage } from "../app/messageSlice";
 
 export default function Login() {
     const emailRef = useRef();
     const passRef = useRef();
 
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
     const [error, setError] = useState("");
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         const email = emailRef.current.value;
         const password = passRef.current.value;
 
@@ -16,7 +22,34 @@ export default function Login() {
             return false;
         }
 
-        
+        const api = import.meta.env.VITE_API_URL;
+        const res = await fetch(`${api}/login`, {
+            method: "POST",
+            body: JSON.stringify({ email, password }),
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+
+        if(!res.ok) {
+            setError("something wrong. please try again.");
+            return false;
+        }
+
+        const data = await res.json();
+        localStorage.setItem("token", data.token);   
+
+        const user_res = await fetch(`${api}/verify`, {
+            headers: {
+                'Authorization': `Bearer ${data.token}`
+            }
+        });
+
+        const user = await user_res.json();
+
+        dispatch(setFeedBack("Login success"));
+        dispatch(setOpenMessage());
+        navigate("/");      
     }
 
     return <Box>

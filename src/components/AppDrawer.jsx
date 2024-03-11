@@ -70,7 +70,10 @@ export default function AppDrawer() {
                     </ListItem>
 
                     <ListItem disablePadding>
-                        <ListItemButton disableRipple>
+                        <ListItemButton disableRipple onClick={() => {
+                            localStorage.removeItem("token");
+                            dispatch(setOpenDrawer());
+                        }}>
                             <ListItemIcon>
                                 <LogoutIcon />
                             </ListItemIcon>

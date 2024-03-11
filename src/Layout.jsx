@@ -1,7 +1,7 @@
 import { Alert, Box, Container, Fab, Snackbar } from "@mui/material";
 import Header from "./components/Header";
 import AppDrawer from "./components/AppDrawer";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setOpenMessage } from "./app/messageSlice";
 import { Add } from "@mui/icons-material";
@@ -11,6 +11,8 @@ export default function Layout() {
     const feedBack = useSelector(state => state.message.feedBack);
     const dispatch = useDispatch();
 
+    const navigate = useNavigate();
+
     return <Box>
         <Box>
             <Header />
@@ -18,7 +20,10 @@ export default function Layout() {
         </Box>
         <Container sx={{ mt: 5 }} maxWidth="sm">
             <Outlet />
-            <Fab color="success" sx={{ position: "fixed", bottom: 40, right: 40 }}>
+            <Fab 
+                color="success" 
+                sx={{ position: "fixed", bottom: 40, right: 40 }}
+                onClick={() => navigate("/add-article")}>
                 <Add />
             </Fab>
         </Container>

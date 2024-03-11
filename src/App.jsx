@@ -3,6 +3,7 @@ import Layout from "./Layout";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import AddArticle from "./pages/AddArticle";
 
 export default function App() {
    const router = createBrowserRouter([
@@ -21,6 +22,10 @@ export default function App() {
             {
                path: "/login",
                element: <Login />
+            },
+            {
+               path: "/add-article",
+               element: <AddArticle />
             }
          ]
       }
