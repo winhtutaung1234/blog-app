@@ -8,7 +8,7 @@ import { useAuthUser } from "../components/AuthUser";
 export default function Login() {
     const emailRef = useRef();
     const passRef = useRef();
-    const { authUser, setAuthUser } = useAuthUser();
+    const { setAuthUser } = useAuthUser();
 
     const navigate = useNavigate();
     const dispatch = useDispatch();

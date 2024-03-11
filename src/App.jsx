@@ -4,8 +4,12 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import AddArticle from "./pages/AddArticle";
+import { Navigate } from "react-router-dom";
+import { useAuthUser } from "./components/AuthUser";
 
 export default function App() {
+   const { authUser } = useAuthUser();
+
    const router = createBrowserRouter([
       {
          path: "/",
@@ -25,7 +29,7 @@ export default function App() {
             },
             {
                path: "/add-article",
-               element: <AddArticle />
+               element: Object.keys(authUser).length !== 0  ? <AddArticle /> : <Navigate to="/" />
             }
          ]
       }
