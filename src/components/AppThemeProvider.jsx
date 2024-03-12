@@ -10,7 +10,12 @@ export default function AppThemeProvider({ children }) {
     const theme = useMemo(() => {
         return createTheme({
             palette: {
-                mode
+                mode,
+                ...(mode === "light"? {
+                        banner: { background: "#e1e1e1" },
+                    } : {
+                        banner: { background: "#222" },
+                    })
             }
         })
     }, [mode]);

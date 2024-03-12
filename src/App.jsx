@@ -6,6 +6,7 @@ import Register from "./pages/Register";
 import AddArticle from "./pages/AddArticle";
 import { Navigate } from "react-router-dom";
 import { useAuthUser } from "./components/AuthUser";
+import Profile from "./pages/Profile";
 
 export default function App() {
    const { authUser } = useAuthUser();
@@ -30,6 +31,10 @@ export default function App() {
             {
                path: "/add-article",
                element: Object.keys(authUser).length !== 0  ? <AddArticle /> : <Navigate to="/" />
+            },
+            {
+               path: "/profile",
+               element: <Profile />
             }
          ]
       }
