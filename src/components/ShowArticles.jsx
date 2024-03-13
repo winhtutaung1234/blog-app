@@ -6,7 +6,9 @@ import {
     Menu,
     MenuItem,
     ListItemIcon,
-    ListItemText
+    ListItemText,
+    CardMedia,
+    CardActionArea
 } from "@mui/material";
 
 import { useState } from "react";
@@ -18,17 +20,16 @@ import {
 } from "@mui/icons-material";
 import { blue, green } from "@mui/material/colors";
 
-export default function ShowArticles({ articles, profile }) {
-
+export default function ShowArticles({ articles }) {
     const [showMenu, setShowMenu] = useState(false);
     const [menuPosition, setMenuPosition] = useState(null);
 
-    
+    const imageUrl = import.meta.env.VITE_PUBLIC_IMAGES;
 
     return <Box>
         {articles.map(article => (            
             <Card
-                sx={{ mb: 3 }}
+                sx={{ mb: 3, maxWidth: "100%" }}
                 key={article._id}>
                 <CardContent>
                     <Box
@@ -72,6 +73,7 @@ export default function ShowArticles({ articles, profile }) {
                                 </Box>
                             </Box>
                         </Box>
+                        
                         <Box>
                             <IconButton
                                 onClick={e => {
@@ -105,6 +107,19 @@ export default function ShowArticles({ articles, profile }) {
                             </Menu>
                         </Box>
                     </Box>
+
+                    { article.image && 
+                        <Box sx={{ my: 3 }}>
+                            <CardActionArea>
+                                <CardMedia
+                                    component="img"
+                                    height="194"
+                                    sx={{ width: "100%", borderRadius: 2 }}
+                                    image={`${imageUrl}/${article.image}`}
+                                />
+                            </CardActionArea>
+                        </Box>
+                    }
 
                     <Box sx={{
                         mt: 3,

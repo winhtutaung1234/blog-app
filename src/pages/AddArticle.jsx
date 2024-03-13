@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 export default function AddArticle() {
     const titleRef = useRef();
     const bodyRef = useRef();
+    const imgRef = useRef();
     const navigate = useNavigate();
 
     const [error, setError] = useState();
@@ -12,10 +13,19 @@ export default function AddArticle() {
     const handleSubmit = async () => {
         const title = titleRef.current.value;
         const body = bodyRef.current.value;
+        const img = imgRef.current.files[0];
 
         if(!title || !body) {
-            setError("All required");
+            setError("title and body required");
             return false;
+        }
+
+        const formData = new FormData();
+        formData.append("title", title);
+        formData.append("body", body);
+
+        if(img) {
+            formData.append("image", img);
         }
 
         const api = import.meta.env.VITE_API_URL;
@@ -23,9 +33,8 @@ export default function AddArticle() {
 
         const res = await fetch(`${api}/articles`, {
             method: "POST",
-            body: JSON.stringify({ title, body }),
+            body: formData,
             headers: {
-                'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`,
             },
         });
@@ -46,6 +55,12 @@ export default function AddArticle() {
             e.preventDefault();
             handleSubmit();
         }}>
+            <TextField
+                inputRef={imgRef}
+                type="file"
+                fullWidth
+                sx={{ mb: 2 }}
+            />
             <TextField
                 inputRef={titleRef}
                 label="Title"

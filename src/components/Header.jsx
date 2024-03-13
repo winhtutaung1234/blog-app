@@ -42,7 +42,7 @@ export default function Header() {
                     </IconButton>
                 )}
                 
-                <Typography variant="h6" sx={{ mt: .5, ml: 2 }}>Header</Typography>
+                <Typography variant="h6" sx={{ mt: .5, ml: 2 }}>Blog</Typography>
             </Box>
             <IconButton color="inherit" onClick={() => {
                 dispatch(setMode());
