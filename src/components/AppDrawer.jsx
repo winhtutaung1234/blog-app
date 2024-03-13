@@ -30,6 +30,8 @@ export default function AppDrawer() {
     const dispatch = useDispatch();
     const { authUser } = useAuthUser();
 
+    console.log(authUser);
+
     const navigate = useNavigate();
     const { setAuthUser } = useAuthUser();
 
@@ -54,7 +56,7 @@ export default function AppDrawer() {
                                 width: 70,
                                 height: 70,
                             }}>
-                            a
+                                { authUser.name[0] }
                         </Avatar>
                         <Box sx={{ ml: 3 }}>
                             <Typography sx={{ fontSize: 18 }}>{authUser.name}</Typography>
@@ -82,7 +84,7 @@ export default function AppDrawer() {
 
                             <ListItem disablePadding>
                                 <ListItemButton disableRipple onClick={() => {
-                                    navigate("/profile");
+                                    navigate(`profile/${authUser._id}`);
                                     dispatch(setOpenDrawer());
                                 }}>
                                     <ListItemIcon>

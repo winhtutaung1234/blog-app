@@ -33,7 +33,7 @@ export default function App() {
                element: Object.keys(authUser).length !== 0  ? <AddArticle /> : <Navigate to="/" />
             },
             {
-               path: "/profile",
+               path: "/profile/:id",
                element: <Profile />
             }
          ]
