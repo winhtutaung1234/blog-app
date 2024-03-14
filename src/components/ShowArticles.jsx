@@ -8,7 +8,9 @@ import {
     ListItemIcon,
     ListItemText,
     CardMedia,
-    CardActionArea
+    CardActionArea,
+    ButtonGroup,
+    Button
 } from "@mui/material";
 
 import { useState } from "react";
@@ -16,15 +18,18 @@ import { useState } from "react";
 import { formatDistanceToNow } from "date-fns";
 import {
     MoreVert,
-    Delete as DeleteIcon,
+    Delete as DeleteIcon, Comment as CommentIcon
 } from "@mui/icons-material";
 import { blue, green } from "@mui/material/colors";
+import LikeButton from "../pages/LikeButton";
+import { useNavigate } from "react-router-dom";
 
-export default function ShowArticles({ articles }) {
+export default function ShowArticles({ articles, like, unlike }) {
     const [showMenu, setShowMenu] = useState(false);
     const [menuPosition, setMenuPosition] = useState(null);
 
     const imageUrl = import.meta.env.VITE_PUBLIC_IMAGES;
+    const navigate = useNavigate();
 
     return <Box>
         {articles.map(article => (            
@@ -126,6 +131,29 @@ export default function ShowArticles({ articles }) {
                     }}>
                         <Typography sx={{ fontSize: 17, mb: 2 }}>{article.title}</Typography>
                         <Typography sx={{ fontSize: 15, ml: 3 }}>{article.body}</Typography>
+                    </Box>
+
+                    <Box sx={{ 
+                        mt: 2,
+                        display: "flex",
+                        justifyContent: "space-around",
+                     }}>
+                        <ButtonGroup>
+                            <LikeButton article={article} like={like} unlike={unlike} />
+
+                            <Button
+                                variant="text">
+                                { article.likes ?
+                                    article.likes.length : 0
+                                }
+                            </Button>
+                        </ButtonGroup>
+
+                        <IconButton onClick={() => {
+                            navigate("/comments");
+                        }}>
+                            <CommentIcon />
+                        </IconButton>
                     </Box>
                 </CardContent>
             </Card>

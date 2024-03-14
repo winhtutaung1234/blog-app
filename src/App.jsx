@@ -8,6 +8,8 @@ import { Navigate } from "react-router-dom";
 import { useAuthUser } from "./components/AuthUser";
 import Profile from "./pages/Profile";
 
+import Comment from "./pages/Comment";
+
 export default function App() {
    const { authUser } = useAuthUser();
 
@@ -35,6 +37,10 @@ export default function App() {
             {
                path: "/profile/:id",
                element: <Profile />
+            },
+            {
+               path: "/comments",
+               element: <Comment />
             }
          ]
       }

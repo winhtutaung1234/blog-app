@@ -30,8 +30,6 @@ export default function AppDrawer() {
     const dispatch = useDispatch();
     const { authUser } = useAuthUser();
 
-    console.log(authUser);
-
     const navigate = useNavigate();
     const { setAuthUser } = useAuthUser();
 
