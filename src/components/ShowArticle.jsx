@@ -1,5 +1,12 @@
 import { Comment, Favorite, ReadMore as ReadIcon } from "@mui/icons-material";
-import { Box, Card, CardContent, IconButton, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  IconButton,
+  Typography,
+} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 function ShowArticle({ article }) {
@@ -13,12 +20,22 @@ function ShowArticle({ article }) {
         </Typography>
       </CardContent>
       <Box sx={{ display: "flex", justifyContent: "space-around", my: 1 }}>
-        <IconButton>
-          <Favorite />
-        </IconButton>
-        <IconButton>
-          <Comment />
-        </IconButton>
+        <Button
+          variant="text"
+          size="medium"
+          sx={{ textTransform: "lowercase" }}
+        >
+          {`${article.likes && article.likes.length} people liked this article`}
+        </Button>
+
+        <Button
+          variant="text"
+          size="medium"
+          sx={{ textTransform: "lowercase" }}
+        >
+          {`${article.comments && article.comments.length} comments`}
+        </Button>
+
         <IconButton
           onClick={() => {
             navigte(`/articles/${article._id}`);

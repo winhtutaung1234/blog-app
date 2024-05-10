@@ -17,8 +17,13 @@ import {
   Typography,
 } from "@mui/material";
 
+import { useAuthUser } from "../providers/AuthUserProvider";
+import LikeButton from "../components/LikeButton";
+
 function Article() {
   const { id } = useParams();
+  const { authUser } = useAuthUser();
+
   const [isLoading, setIsLoading] = useState(true);
   const [article, setArticle] = useState();
 
@@ -35,7 +40,44 @@ function Article() {
     return <h1>Loading..</h1>;
   }
 
-  console.log(article);
+  const like = async () => {
+    const api = import.meta.env.VITE_API_URL;
+    const token = localStorage.getItem("token");
+
+    const res = await fetch(`${api}/articles/like/${article._id}`, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!res.ok) {
+      console.log((await res.json()).msg);
+    }
+
+    setArticle((article) => ({
+      ...article,
+      likes: [authUser._id, ...article.likes],
+    }));
+  };
+
+  const unlike = async () => {
+    const api = import.meta.env.VITE_API_URL;
+    const token = localStorage.getItem("token");
+
+    const res = await fetch(`${api}/articles/unlike/${article._id}`, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    setArticle((article) => ({
+      ...article,
+      likes: [...article.likes.filter((like) => like !== authUser._id)],
+    }));
+  };
+
   return (
     <Card sx={{ mb: 3 }}>
       <CardContent>
@@ -46,19 +88,7 @@ function Article() {
       </CardContent>
       <Box sx={{ display: "flex", justifyContent: "space-evenly", my: 1 }}>
         <ButtonGroup>
-          <IconButton
-            onClick={async () => {
-              const api = import.meta.env.VITE_API_URL;
-              const res = await fetch(`${api}/like/${article._id}`, {
-                method: "PUT",
-                headers: {
-                  Authorization: `Bearer ${token}`,
-                },
-              });
-            }}
-          >
-            <LikeIcon sx={{ fontSize: 20 }} />
-          </IconButton>
+          <LikeButton article={article} like={like} unlike={unlike} />
           <Button variant="text" color="inherit">
             {article.likes ? article.likes.length : 0}
           </Button>
