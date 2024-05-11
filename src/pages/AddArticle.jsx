@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 function AddArticle() {
   const titleRef = useRef();
   const bodyRef = useRef();
+  const imageRef = useRef();
   const navigate = useNavigate();
 
   const [error, setError] = useState("");
@@ -12,15 +13,20 @@ function AddArticle() {
   const handleSubmit = async () => {
     const title = titleRef.current.value;
     const body = bodyRef.current.value;
+    const image = imageRef.current.files[0];
 
     const api = import.meta.env.VITE_API_URL;
     const token = localStorage.getItem("token");
 
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("body", body);
+    formData.append("image", image);
+
     const res = await fetch(`${api}/articles`, {
       method: "POST",
-      body: JSON.stringify({ title, body }),
+      body: formData,
       headers: {
-        "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
     });
@@ -32,6 +38,7 @@ function AddArticle() {
 
     navigate("/");
   };
+
   return (
     <>
       {error && (
@@ -40,11 +47,14 @@ function AddArticle() {
         </Alert>
       )}
       <form
+        encType="multipart/form-data"
         onSubmit={(e) => {
           e.preventDefault();
           handleSubmit();
         }}
       >
+        <TextField fullWidth type="file" inputRef={imageRef} sx={{ mb: 2 }} />
+
         <TextField fullWidth inputRef={titleRef} sx={{ mb: 2 }} label="Title" />
 
         <TextField

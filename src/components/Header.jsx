@@ -1,25 +1,42 @@
-import { Menu, DarkMode } from "@mui/icons-material";
+import { Menu, DarkMode, ArrowBack } from "@mui/icons-material";
 import { AppBar, Avatar, IconButton, Toolbar, Typography } from "@mui/material";
 import { useUIState } from "../providers/UIStateProvider";
 import { useAuthUser } from "../providers/AuthUserProvider";
 import { blue } from "@mui/material/colors";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function Header() {
   const { setOpenDrawer } = useUIState();
   const { authUser } = useAuthUser();
 
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
+
   return (
     <AppBar position="static">
       <Toolbar>
-        <IconButton
-          color="inherit"
-          sx={{ mr: 3 }}
-          onClick={() => {
-            setOpenDrawer(true);
-          }}
-        >
-          <Menu />
-        </IconButton>
+        {pathname === "/" ? (
+          <IconButton
+            color="inherit"
+            sx={{ mr: 3 }}
+            onClick={() => {
+              setOpenDrawer(true);
+            }}
+          >
+            <Menu />
+          </IconButton>
+        ) : (
+          <IconButton
+            color="inherit"
+            sx={{ mr: 3 }}
+            onClick={() => {
+              navigate(-1);
+            }}
+          >
+            <ArrowBack />
+          </IconButton>
+        )}
+
         <Typography variant="h6" sx={{ flexGrow: 1 }}>
           Blog App
         </Typography>

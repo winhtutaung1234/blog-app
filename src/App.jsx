@@ -4,6 +4,7 @@ import Article from "./pages/Article";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import AddComment from "./components/AddComment";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
       {
         path: "/register",
         element: <Register />,
+      },
+      {
+        path: "/articles/:origin/comments",
+        element: <AddComment />,
       },
     ],
   },

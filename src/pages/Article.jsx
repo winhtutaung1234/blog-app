@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import {
   Comment,
@@ -8,17 +8,21 @@ import {
 } from "@mui/icons-material";
 
 import {
+  Avatar,
   Box,
   Button,
   ButtonGroup,
   Card,
   CardContent,
+  CardHeader,
+  CardMedia,
   IconButton,
   Typography,
 } from "@mui/material";
 
 import { useAuthUser } from "../providers/AuthUserProvider";
 import LikeButton from "../components/LikeButton";
+import { red } from "@mui/material/colors";
 
 function Article() {
   const { id } = useParams();
@@ -26,6 +30,9 @@ function Article() {
 
   const [isLoading, setIsLoading] = useState(true);
   const [article, setArticle] = useState();
+  const navigate = useNavigate();
+
+  const image_url = import.meta.env.VITE_IMG_URL;
 
   useEffect(() => {
     (async () => {
@@ -80,6 +87,17 @@ function Article() {
 
   return (
     <Card sx={{ mb: 3 }}>
+      <CardHeader
+        avatar={
+          <Avatar sx={{ bgcolor: red[500] }}>{article.owner.name[0]}</Avatar>
+        }
+        title={article.owner.name}
+      />
+      <CardMedia
+        image={`${image_url}/${article.image}`}
+        height="240"
+        component="img"
+      />
       <CardContent>
         <Typography sx={{ fontSize: 17 }}>{article.title}</Typography>
         <Typography sx={{ fontSize: 16, ml: 2, mt: 1 }}>
@@ -95,7 +113,11 @@ function Article() {
         </ButtonGroup>
 
         <ButtonGroup>
-          <IconButton>
+          <IconButton
+            onClick={() => {
+              navigate(`/articles/${article._id}/comments`);
+            }}
+          >
             <Comment sx={{ fontSize: 20 }} />
           </IconButton>
           <Button variant="text" color="inherit">

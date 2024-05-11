@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useEffect } from "react";
 import ShowArticle from "../components/ShowArticle";
+import { Container } from "@mui/material";
 
 function Home() {
   const [articles, setArticles] = useState([]);
@@ -14,9 +15,11 @@ function Home() {
   }, []);
   return (
     <>
-      {articles.map((article) => (
-        <ShowArticle key={article._id} article={article} />
-      ))}
+      <Container maxWidth="xs">
+        {articles.map((article) => (
+          <ShowArticle key={article._id} article={article} />
+        ))}
+      </Container>
     </>
   );
 }
