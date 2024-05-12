@@ -11,6 +11,12 @@ function AddComment() {
 
   const handleSubmit = async () => {
     const content = contentRef.current.value;
+
+    if (!content) {
+      setError("Content required!");
+      return false;
+    }
+
     const api = import.meta.env.VITE_API_URL;
     const token = localStorage.getItem("token");
 
@@ -22,11 +28,6 @@ function AddComment() {
         Authorization: `Bearer ${token}`,
       },
     });
-
-    if (!res.ok) {
-      setError((await res.json()).msg);
-      return false;
-    }
 
     navigate(-1);
   };

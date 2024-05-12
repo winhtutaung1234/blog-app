@@ -7,6 +7,7 @@ import Register from "./pages/Register";
 import AddComment from "./components/AddComment";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import ShowComments from "./components/ShowComments";
 
 const router = createBrowserRouter([
   {
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
       {
         path: "/articles/:origin/comments",
         element: <AddComment />,
+      },
+      {
+        path: "/article/:id/comments",
+        element: <ShowComments />,
       },
     ],
   },

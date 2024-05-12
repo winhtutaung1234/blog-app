@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 import {
   Comment,
@@ -30,6 +30,7 @@ function Article() {
 
   const [isLoading, setIsLoading] = useState(true);
   const [article, setArticle] = useState();
+
   const navigate = useNavigate();
 
   const image_url = import.meta.env.VITE_IMG_URL;
@@ -38,7 +39,8 @@ function Article() {
     (async () => {
       const api = import.meta.env.VITE_API_URL;
       const res = await fetch(`${api}/articles/${id}`);
-      setArticle(await res.json());
+      const data = await res.json();
+      setArticle(data);
       setIsLoading(false);
     })();
   }, []);
@@ -120,7 +122,13 @@ function Article() {
           >
             <Comment sx={{ fontSize: 20 }} />
           </IconButton>
-          <Button variant="text" color="inherit">
+          <Button
+            variant="text"
+            color="inherit"
+            onClick={() => {
+              navigate(`/article/${article._id}/comments`);
+            }}
+          >
             {article.comments ? article.comments.length : 0}
           </Button>
         </ButtonGroup>
