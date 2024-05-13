@@ -11,6 +11,7 @@ import {
   Typography,
 } from "@mui/material";
 import { red } from "@mui/material/colors";
+
 import { useNavigate } from "react-router-dom";
 
 function ShowArticle({ article }) {
@@ -38,11 +39,25 @@ function ShowArticle({ article }) {
         </Typography>
       </CardContent>
       <Box sx={{ display: "flex", justifyContent: "space-around", my: 1 }}>
-        <Button variant="text" size="small" sx={{ textTransform: "lowercase" }}>
+        <Button
+          variant="text"
+          size="small"
+          sx={{ textTransform: "lowercase" }}
+          onClick={() => {
+            navigte(`/articles/${article._id}/likes`);
+          }}
+        >
           {`${article.likes && article.likes.length} likes`}
         </Button>
 
-        <Button variant="text" size="small" sx={{ textTransform: "lowercase" }}>
+        <Button
+          variant="text"
+          size="small"
+          sx={{ textTransform: "lowercase" }}
+          onClick={() => {
+            navigte(`/article/${article._id}/comments`);
+          }}
+        >
           {`${article.comments && article.comments.length} comments`}
         </Button>
 

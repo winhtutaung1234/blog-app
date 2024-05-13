@@ -8,6 +8,7 @@ export function useAuthUser() {
 
 function AuthUserProvider({ children }) {
   const [authUser, setAuthUser] = useState("");
+
   useEffect(() => {
     (async () => {
       const api = import.meta.env.VITE_API_URL;
@@ -18,13 +19,11 @@ function AuthUserProvider({ children }) {
         },
       });
 
-      if (!res.ok) {
-        console.log((await res.json()).msg);
+      if (res.ok) {
+        setAuthUser(await res.json());
       }
-
-      setAuthUser(await res.json());
     })();
-  }, []);
+  }, [authUser]);
 
   return (
     <AuthUserContext.Provider value={{ authUser, setAuthUser }}>

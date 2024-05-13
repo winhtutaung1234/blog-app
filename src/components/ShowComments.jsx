@@ -6,23 +6,47 @@ import { formatDistanceToNow } from "date-fns";
 
 import { Clear as RemoveIcon } from "@mui/icons-material";
 
+import { useAuthUser } from "../providers/AuthUserProvider";
+
 function ShowComments() {
   const { id } = useParams();
   const [comments, setComments] = useState([]);
   const [error, setError] = useState("");
 
-  const removeComment = (_id) => {
-    setComments(comments.filter((comment) => comment._id !== _id));
-  };
+  const api = import.meta.env.VITE_API_URL;
+
+  const { authUser } = useAuthUser();
 
   useEffect(() => {
     (async () => {
-      const api = import.meta.env.VITE_API_URL;
       const res = await fetch(`${api}/article/${id}/comments`);
       const data = await res.json();
       setComments(data);
     })();
   }, []);
+
+  const deleteApi = async (commentId) => {
+    const token = localStorage.getItem("token");
+
+    const res = await fetch(`${api}/articles/comments/${commentId}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!res.ok) {
+      setError((await res.json()).msg);
+      return false;
+    }
+
+    setError("");
+    removeComment(commentId);
+  };
+
+  const removeComment = (_id) => {
+    setComments(comments.filter((comment) => comment._id !== _id));
+  };
 
   if (comments.length <= 0) {
     return <Typography sx={{ fontSize: 18 }}>No comments ....</Typography>;
@@ -53,31 +77,15 @@ function ShowComments() {
                   addSuffix: true,
                 })}
               </Typography>
-              <IconButton
-                onClick={async () => {
-                  const api = import.meta.env.VITE_API_URL;
-                  const token = localStorage.getItem("token");
-
-                  const res = await fetch(
-                    `${api}/articles/comments/${comment._id}`,
-                    {
-                      method: "DELETE",
-                      headers: {
-                        Authorization: `Bearer ${token}`,
-                      },
-                    }
-                  );
-
-                  if (!res.ok) {
-                    setError((await res.json()).msg);
-                    return false;
-                  }
-
-                  removeComment(comment._id);
-                }}
-              >
-                <RemoveIcon sx={{ fontSize: 17 }} />
-              </IconButton>
+              {authUser._id === comment.owner._id && (
+                <IconButton
+                  onClick={() => {
+                    deleteApi(comment._id);
+                  }}
+                >
+                  <RemoveIcon sx={{ fontSize: 17 }} />
+                </IconButton>
+              )}
             </Box>
           </Box>
           <Box sx={{ pb: 3 }}>

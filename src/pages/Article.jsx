@@ -109,7 +109,13 @@ function Article() {
       <Box sx={{ display: "flex", justifyContent: "space-evenly", my: 1 }}>
         <ButtonGroup>
           <LikeButton article={article} like={like} unlike={unlike} />
-          <Button variant="text" color="inherit">
+          <Button
+            variant="text"
+            color="inherit"
+            onClick={() => {
+              navigate(`/articles/${article._id}/likes`);
+            }}
+          >
             {article.likes ? article.likes.length : 0}
           </Button>
         </ButtonGroup>

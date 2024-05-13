@@ -51,9 +51,7 @@ function AppDrawer() {
                   }}
                 >
                   <ListItemIcon>
-                    <IconButton>
-                      <HomeIcon />
-                    </IconButton>
+                    <HomeIcon />
                   </ListItemIcon>
                   <ListItemText primary="Home" />
                 </ListItemButton>
@@ -68,9 +66,7 @@ function AppDrawer() {
                   }}
                 >
                   <ListItemIcon>
-                    <IconButton>
-                      <AddIcon />
-                    </IconButton>
+                    <AddIcon />
                   </ListItemIcon>
                   <ListItemText primary="Add Article" />
                 </ListItemButton>
@@ -80,14 +76,12 @@ function AppDrawer() {
                 <ListItemButton
                   disableRipple
                   onClick={() => {
-                    setAuthUser("");
+                    localStorage.removeItem("token");
                     closeDrawer();
                   }}
                 >
                   <ListItemIcon>
-                    <IconButton>
-                      <LogoutIcon />
-                    </IconButton>
+                    <LogoutIcon />
                   </ListItemIcon>
                   <ListItemText primary="Logout" />
                 </ListItemButton>
@@ -106,9 +100,7 @@ function AppDrawer() {
                   }}
                 >
                   <ListItemIcon>
-                    <IconButton>
-                      <LoginIcon />
-                    </IconButton>
+                    <LoginIcon />
                   </ListItemIcon>
                   <ListItemText primary="Login" />
                 </ListItemButton>
@@ -123,9 +115,7 @@ function AppDrawer() {
                   }}
                 >
                   <ListItemIcon>
-                    <IconButton>
-                      <RegisterIcon />
-                    </IconButton>
+                    <RegisterIcon />
                   </ListItemIcon>
                   <ListItemText primary="Register" />
                 </ListItemButton>
