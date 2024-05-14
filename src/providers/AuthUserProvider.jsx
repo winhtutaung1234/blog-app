@@ -7,7 +7,8 @@ export function useAuthUser() {
 }
 
 function AuthUserProvider({ children }) {
-  const [authUser, setAuthUser] = useState("");
+  const [authUser, setAuthUser] = useState();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     (async () => {
@@ -21,10 +22,14 @@ function AuthUserProvider({ children }) {
 
       if (res.ok) {
         setAuthUser(await res.json());
+        setIsLoading(false);
       }
     })();
-  }, [authUser]);
+  }, []);
 
+  if (isLoading) {
+    return <h1>Loading...</h1>;
+  }
   return (
     <AuthUserContext.Provider value={{ authUser, setAuthUser }}>
       {children}

@@ -1,6 +1,6 @@
-import { Alert, Button, TextField } from "@mui/material";
+import { Alert, Box, Button, TextField } from "@mui/material";
 import { useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Register() {
   const nameRef = useRef();
@@ -67,6 +67,9 @@ function Register() {
           Register
         </Button>
       </form>
+      <Box sx={{ my: 3, textAlign: "center" }}>
+        <Link to="/login">Login</Link>
+      </Box>
     </>
   );
 }

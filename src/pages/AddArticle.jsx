@@ -31,6 +31,10 @@ function AddArticle() {
       },
     });
 
+    if (!token) {
+      setError("token required");
+      return false;
+    }
     if (!res.ok) {
       setError((await res.json()).msg);
       return false;

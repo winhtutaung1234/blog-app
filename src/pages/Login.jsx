@@ -1,7 +1,7 @@
-import { Alert, Button, TextField } from "@mui/material";
+import { Alert, Box, Button, TextField } from "@mui/material";
 import { useRef, useState } from "react";
 import { useAuthUser } from "../providers/AuthUserProvider";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -82,6 +82,9 @@ function Login() {
           Login
         </Button>
       </form>
+      <Box sx={{ my: 3, textAlign: "center" }}>
+        <Link to="/register">Register</Link>
+      </Box>
     </>
   );
 }
