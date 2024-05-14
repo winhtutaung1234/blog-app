@@ -77,6 +77,7 @@ function AppDrawer() {
                   disableRipple
                   onClick={() => {
                     localStorage.removeItem("token");
+                    setAuthUser();
                     closeDrawer();
                   }}
                 >
